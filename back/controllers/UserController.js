@@ -323,7 +323,8 @@ export const initiatePasswordRecovery = async (req, res) => {
 
     const resetUrl = `http://localhost:3000/reset-password/${token}`;
 
-    const fixedPath = __dirname.substring(1);
+    const fixedPath = __dirname;
+    console.log(fixedPath)
 
     const template = fs.readFileSync(
       path.join(fixedPath, "..", "mails", "resetPassword.ejs"),
