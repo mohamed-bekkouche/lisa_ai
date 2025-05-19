@@ -3,15 +3,17 @@
 import { useState } from "react"
 import axios from "../../helpers/axios"
 import { useSelector } from "react-redux"
+import { useTranslation } from "react-i18next"
+
 
 const Plans = () => {
   const user = useSelector((state) => state.login)
   const { subscription } = useSelector((state) => state.payment)
 
   const [currentSubscription, setCurrentSubscription] = useState(subscription || null)
-  console.log("The Sub is : ,", currentSubscription)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
+  const { t } = useTranslation()
 
   // Check if subscription is still active
   const isSubscriptionActive = currentSubscription && new Date(currentSubscription.expDate) > new Date()
@@ -23,7 +25,7 @@ const Plans = () => {
     name: "Premium",
     duration: "year",
     price: 99,
-    description: "Yearly Premium Membership",
+    description: t("Yearly Premium Membership"),
     benefits: [
       "Résultats d'IA Instantanément",
       "Accès à la Liste Complète des Docteurs",
@@ -92,7 +94,7 @@ const Plans = () => {
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
             <h2 className="text-3xl font-bold text-purple-700 relative">
-              Premium Subscription
+              {t("Premium Subscription")}
               <span className="absolute w-[40%] h-1 bg-pink-500 rounded-md bottom-[-8px] left-0"></span>
             </h2>
           </div>
@@ -203,7 +205,7 @@ const Plans = () => {
               </div>
               <div className="flex flex-col items-end">
                 <div className="text-3xl font-bold text-pink-600">${plan.price}</div>
-                <div className="text-sm text-purple-500">per year</div>
+                <div className="text-sm text-purple-500">{t("per year")}</div>
               </div>
             </div>
 
@@ -278,7 +280,7 @@ const Plans = () => {
                           d="M17 8l4 4m0 0l-4 4m4-4H3"
                         />
                       </svg>
-                      {currentSubscription ? "Renew Subscription" : "Subscribe Now"}
+                      {currentSubscription ? t("Renew Subscription") : t("Subscribe Now")}
                     </>
                   )}
                 </button>

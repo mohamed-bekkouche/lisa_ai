@@ -831,23 +831,7 @@ export function NotificationTable() {
                             </TableCell>
                             <TableCell align="right">
                               <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
-                                <Tooltip title={t("View details")}>
-                                  <IconButton
-                                    size="small"
-                                    sx={{
-                                      color: "rgba(255, 255, 255, 0.7)",
-                                      backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                      borderRadius: "10px",
-                                      transition: "all 0.2s ease",
-                                      "&:hover": {
-                                        transform: "scale(1.1)",
-                                        backgroundColor: "rgba(255, 255, 255, 0.1)",
-                                      },
-                                    }}
-                                  >
-                                    <VisibilityIcon fontSize="small" />
-                                  </IconButton>
-                                </Tooltip>
+                                
                                 <Tooltip title={notification.read ? t("Mark as unread") : t("Mark as read")}>
                                   <IconButton
                                     onClick={() => handleReadNotification(notification._id)}
@@ -872,24 +856,6 @@ export function NotificationTable() {
                                     ) : (
                                       <MarkEmailReadIcon fontSize="small" />
                                     )}
-                                  </IconButton>
-                                </Tooltip>
-                                <Tooltip title={t("Delete")}>
-                                  <IconButton
-                                    size="small"
-                                    sx={{
-                                      color: "rgba(255, 255, 255, 0.5)",
-                                      backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                      borderRadius: "10px",
-                                      transition: "all 0.2s ease",
-                                      "&:hover": {
-                                        transform: "scale(1.1)",
-                                        backgroundColor: "rgba(236, 72, 153, 0.1)",
-                                        color: "#ec4899",
-                                      },
-                                    }}
-                                  >
-                                    <DeleteIcon fontSize="small" />
                                   </IconButton>
                                 </Tooltip>
                               </Box>
