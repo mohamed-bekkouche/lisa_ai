@@ -24,7 +24,7 @@ const Plans = () => {
     link: "https://buy.stripe.com/test_cN2dTn4Qm9hf836000",
     name: "Premium",
     duration: "year",
-    price: 99,
+    price: 9.99,
     description: t("Yearly Premium Membership"),
     benefits: [
       "Résultats d'IA Instantanément",

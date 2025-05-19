@@ -533,7 +533,7 @@ export default function Contact() {
                           cursor: "pointer",
                         }}
                       >
-                        +1 (555) 123-4567
+                        +213 541 85 54 37
                       </Typography>
                     </Box>
                   </Box>
@@ -586,7 +586,7 @@ export default function Contact() {
 
                   <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
                     <Typography variant="body1" sx={{ color: "rgba(255, 255, 255, 0.7)" }}>
-                      {t("Monday - Friday")}
+                      {t("Sunday - Thursday")}
                     </Typography>
                     <Typography variant="body1" sx={{ color: "#ffffff", fontWeight: 500 }}>
                       9:00 AM - 6:00 PM
@@ -595,7 +595,7 @@ export default function Contact() {
 
                   <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                     <Typography variant="body1" sx={{ color: "rgba(255, 255, 255, 0.7)" }}>
-                      {t("Saturday - Sunday")}
+                      {t("Friday - Saturday")}
                     </Typography>
                     <Typography variant="body1" sx={{ color: "#ffffff", fontWeight: 500 }}>
                       {t("Closed")}

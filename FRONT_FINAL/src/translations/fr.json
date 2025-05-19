@@ -6,7 +6,7 @@
   "Premium Benefits":"Avantages Premium",
   "Renew Subscription":"Renouveler l'abonnement",
   "Subscribe Now":"S'abonner maintenant",
-  
+
   "No scans available. Please contact your administrator.": "Aucun scan disponible. Veuillez contacter votre administrateur.",
   "Image not available": "Image non disponible",
   "submit for analysis": "soumettre pour analyse",
@@ -76,11 +76,11 @@
   "Your Scans": "Vos scans",
   "Upload New Scan": "Télécharger un nouveau scan",
   "What types of scans are supported?": "Quels types de scans sont pris en charge ?",
-  "Our platform supports various medical imaging formats including X-rays, MRIs, CT scans, and ultrasounds. All images are stored securely and can be viewed in high resolution.": "Notre plateforme prend en charge divers formats d'imagerie médicale, y compris les radiographies, IRM, scanners CT et échographies. Toutes les images sont stockées en toute sécurité et peuvent être visualisées en haute résolution.",
+  "Our platform supports various medical imaging formats including X-rays and ultrasounds. All images are stored securely and can be viewed in high resolution.": "Notre plateforme prend en charge divers formats d'imagerie médicale, y compris les radiographies. Toutes les images sont stockées en toute sécurité et peuvent être visualisées en haute résolution.",
   "How long are my scans stored?": "Combien de temps mes scans sont-ils stockés ?",
   "Your scans are securely stored on our platform indefinitely. You can access them anytime from your account. Premium members get additional backup options and export features.": "Vos scans sont stockés en toute sécurité sur notre plateforme indéfiniment. Vous pouvez y accéder à tout moment depuis votre compte. Les membres premium bénéficient d'options de sauvegarde supplémentaires et de fonctionnalités d'exportation.",
   "Can I share my scans with my doctor?": "Puis-je partager mes scans avec mon médecin ?",
-  "Yes, you can easily share your scans with healthcare professionals. Premium members have advanced sharing options including direct integration with healthcare systems.": "Oui, vous pouvez facilement partager vos scans avec des professionnels de la santé. Les membres premium disposent d'options de partage avancées, y compris l'intégration directe avec les systèmes de santé.",
+  "No, you can't, but Premium members have advanced sharing options including direct integration with healthcare systems.": "Non, vous pouvez, pas mais les membres premium disposent d'options de partage avancées, y compris l'intégration directe avec les systèmes de santé.",
   "How secure is my scan data?": "Quelle est la sécurité de mes données de scan ?",
   "We use industry-leading encryption and security protocols to protect your medical data. All scans are stored in compliance with healthcare privacy regulations.": "Nous utilisons des protocoles de sécurité et de cryptage de pointe pour protéger vos données médicales. Tous les scans sont stockés en conformité avec les réglementations sur la confidentialité des soins de santé.",
 
@@ -102,6 +102,8 @@
   "Get in touch": "Contactez-nous",
   "Office Hours": "Heures d'ouverture",
   "Closed": "Fermé",
+  "Sunday - Thursday": "Dimanche - Jeudi",
+  "Friday - Saturday": "Vendredi - Samedi",
   "Monday - Friday": "Lundi - Vendredi",
   "Saturday - Sunday": "Samedi - Dimanche",
   "Need immediate assistance?": "Besoin d'une assistance immédiate ?",

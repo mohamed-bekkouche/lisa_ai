@@ -345,7 +345,7 @@ export default function Dashboard() {
         {/* Dashboard Cards */}
         <Grid container spacing={3} sx={{ mb: 4 }}>
           {cardStyles.map((card, index) => (
-            <Grid item xs={12} sm={6} lg={4} key={index}>
+            <Grid item xs={12} sm={6} lg={4} size={2} key={index}>
               <Card
                 sx={{
                   borderRadius: "24px",
@@ -410,7 +410,7 @@ export default function Dashboard() {
         {/* Recent Activity Section */}
         <Grid container spacing={4} sx={{ mb: 4 }}>
           {/* Recent Appointments */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} size={6}>
             <Card
               sx={{
                 borderRadius: "24px",
@@ -582,7 +582,7 @@ export default function Dashboard() {
           </Grid>
 
           {/* Recent Users */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} size={6}>
             <Card
               sx={{
                 borderRadius: "24px",

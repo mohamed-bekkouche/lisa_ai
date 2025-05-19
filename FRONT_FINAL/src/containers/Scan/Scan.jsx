@@ -280,7 +280,7 @@ export default function Scan() {
     {
       question: t("What types of scans are supported?"),
       answer: t(
-        "Our platform supports various medical imaging formats including X-rays, MRIs, CT scans, and ultrasounds. All images are stored securely and can be viewed in high resolution."
+        "Our platform supports various medical imaging formats including X-rays and ultrasounds. All images are stored securely and can be viewed in high resolution."
       ),
     },
     {
@@ -292,7 +292,7 @@ export default function Scan() {
     {
       question: t("Can I share my scans with my doctor?"),
       answer: t(
-        "Yes, you can easily share your scans with healthcare professionals. Premium members have advanced sharing options including direct integration with healthcare systems."
+        "No, you can't, but Premium members have advanced sharing options including direct integration with healthcare systems."
       ),
     },
     {
