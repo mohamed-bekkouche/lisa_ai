@@ -266,9 +266,9 @@ export const rescheduleAppointment = async (req, res) => {
 
     const io = req.app.get("io");
     await sendNotification(
-      "Your appointment has been rescheduled successfully",
-      "Votre rendez-vous a été reprogrammé avec succès",
-      oldAppointment.patientID,
+      `${patient.name} has rescheduled his appointment `,
+      `${patient.name} a modifier son rendez vous `,
+      "admin",
       io
     );
 
@@ -332,7 +332,7 @@ export const requestAIScan = async (req, res) => {
     const scan = await Scan.findById(scanID);
     if (!scan) return res.status(404).json({ message: "Scan Not Found" });
 
-    const localImagePath = path.join(__dirname, "../", scan.imageURL);
+   const localImagePath = path.join(__dirname, "../", scan.imageURL).replace(/^\/+/, "");
     console.log("localImagePath : ", localImagePath);
 
     if (!fs.existsSync(localImagePath)) {
@@ -342,7 +342,7 @@ export const requestAIScan = async (req, res) => {
     }
 
     const response = await axios.post(
-      "http://localhost:5001/predict",
+      "http://127.0.0.1:5001/predict",
       {
         imagePath: localImagePath,
       },
@@ -369,6 +369,7 @@ export const requestAIScan = async (req, res) => {
       scanResult: IsPremium ? scanResult : null,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       message: "Error Requesting Scan",
       error: error.message?.includes("E11000")
