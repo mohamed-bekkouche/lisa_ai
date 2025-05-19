@@ -2,7 +2,7 @@
 import Notification from "../models/Notification.js";
 import mongoose from "mongoose";
 
-export const sendNotification = async (content, to, io) => {
+export const sendNotification = async (content, contentFr, to, io) => {
   try {
     // Validate inputs
     if (!content || !to) {
@@ -17,6 +17,7 @@ export const sendNotification = async (content, to, io) => {
     // Create and save notification
     const newNotification = new Notification({
       content,
+      contentFr,
       to,
       read: false,
     });

@@ -14,6 +14,7 @@ import {
   removeUnavailableDay,
   getAppointments,
   getAppointmentById,
+  getScans,
 } from "../controllers/AdminController.js";
 import { authenticateToken, authorizeRoles } from "../middlewares/auth.js";
 import { upload } from "../middlewares/multerConfig.js";
@@ -126,6 +127,14 @@ adminRoutes.delete(
 // ----------------------- Scan Routes -----------------------
 // ----------------------- Scan Routes -----------------------
 // ----------------------- Scan Routes -----------------------
+
+// Get Scans
+adminRoutes.get(
+  "/scans",
+  authenticateToken,
+  authorizeRoles(["Admin"]),
+  getScans
+);
 
 // Upload A Scan
 adminRoutes.post(

@@ -2,7 +2,6 @@ import Appointment from "../models/Appointment.js";
 import Scan from "../models/Scan.js";
 import ScanResult from "../models/ScanResult.js";
 import Subscription from "../models/Subscription.js";
-import mongoose from "mongoose";
 import Doctor from "../models/Doctor.js";
 import Patient from "../models/Patient.js";
 import { sendNotification } from "../utitlitis/notification.js";
@@ -13,6 +12,7 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 import path from "path";
 import axios from "axios";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -151,13 +151,14 @@ export const takeAppointment = async (req, res) => {
     await newAppointment.save();
 
     const io = req.app.get("io");
-
+    console.log("send Notification ");
     await sendNotification(
       `Patient ${patient.name} has taken an appointment. Please review their application.`,
       `Le patient ${patient.name} a pris un rendez-vous. Veuillez examiner sa demande.`,
       "admin",
       io
     );
+    console.log("done send Notification  : ");
 
     res.status(200).json({
       success: true,

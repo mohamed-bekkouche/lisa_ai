@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 const NotificationSchema = new mongoose.Schema({
   content: { type: String, required: true },
+  contentFr: { type: String, required: true },
   to: {
     type: mongoose.Schema.Types.Mixed,
     required: true,

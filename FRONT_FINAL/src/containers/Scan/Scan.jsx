@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Box,
@@ -23,67 +23,77 @@ import {
   AccordionSummary,
   AccordionDetails,
   Chip,
-} from "@mui/material"
-import StarIcon from "@mui/icons-material/Star"
-import AddIcon from "@mui/icons-material/Add"
-import PersonIcon from "@mui/icons-material/Person"
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
-import RefreshIcon from "@mui/icons-material/Refresh"
-import VisibilityIcon from "@mui/icons-material/Visibility"
-import DownloadIcon from "@mui/icons-material/Download"
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import SpeedIcon from "@mui/icons-material/Speed"
-import AccessTimeIcon from "@mui/icons-material/AccessTime"
-import VerifiedUserIcon from "@mui/icons-material/VerifiedUser"
-import PriorityHighIcon from "@mui/icons-material/PriorityHigh"
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
-import MedicalServicesIcon from "@mui/icons-material/MedicalServices"
-import ImageIcon from "@mui/icons-material/Image"
-import dayjs from "dayjs"
-import { useDispatch, useSelector } from "react-redux"
-import { useEffect, useState, useRef } from "react"
-import { AsyncGetScans } from "./ScanSlice"
-import { useNavigate } from "react-router-dom"
-import { BASE_URL } from "../../configs"
+} from "@mui/material";
+import StarIcon from "@mui/icons-material/Star";
+import AddIcon from "@mui/icons-material/Add";
+import PersonIcon from "@mui/icons-material/Person";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import DownloadIcon from "@mui/icons-material/Download";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import SpeedIcon from "@mui/icons-material/Speed";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
+import ImageIcon from "@mui/icons-material/Image";
+import dayjs from "dayjs";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, useRef } from "react";
+import { AsyncGetScans } from "./ScanSlice";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../configs";
 
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "react-i18next";
+import ScanUpload from "./ScanUpload";
 
 export default function Scan() {
-  const theme = useTheme()
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const canvasRef = useRef(null)
-  const [loaded, setLoaded] = useState(false)
+  const theme = useTheme();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const canvasRef = useRef(null);
+  const [loaded, setLoaded] = useState(false);
 
-  const { scans } = useSelector((state) => state.scan)
-  const { name, role, id } = useSelector((state) => state.login)
-  const { isPatientPremium } = useSelector((state) => state.payment)
+  const { scans } = useSelector((state) => state.scan);
+  const { name, role, id } = useSelector((state) => state.login);
+  const { isPatientPremium } = useSelector((state) => state.payment);
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   // Pagination state
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
-    setLoaded(true)
-  }, [])
+    setLoaded(true);
+  }, []);
 
   // Beautiful background animation
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    const ctx = canvas.getContext("2d")
-    const width = (canvas.width = window.innerWidth)
-    const height = (canvas.height = window.innerHeight)
+    const ctx = canvas.getContext("2d");
+    const width = (canvas.width = window.innerWidth);
+    const height = (canvas.height = window.innerHeight);
 
     // Create particles for the neural network
-    const particles = []
-    const connections = []
-    const numParticles = 120
-    const connectionDistance = 150
-    const particleColors = ["#4c1d95", "#5b21b6", "#7e22ce", "#8b5cf6", "#6d28d9", "#4338ca", "#ec4899", "#be185d"]
+    const particles = [];
+    const connections = [];
+    const numParticles = 120;
+    const connectionDistance = 150;
+    const particleColors = [
+      "#4c1d95",
+      "#5b21b6",
+      "#7e22ce",
+      "#8b5cf6",
+      "#6d28d9",
+      "#4338ca",
+      "#ec4899",
+      "#be185d",
+    ];
 
     // Initialize particles
     for (let i = 0; i < numParticles; i++) {
@@ -91,203 +101,243 @@ export default function Scan() {
         x: Math.random() * width,
         y: Math.random() * height,
         radius: Math.random() * 2 + 1,
-        color: particleColors[Math.floor(Math.random() * particleColors.length)],
+        color:
+          particleColors[Math.floor(Math.random() * particleColors.length)],
         vx: Math.random() * 0.5 - 0.25,
         vy: Math.random() * 0.5 - 0.25,
         pulseSpeed: Math.random() * 0.02 + 0.01,
         pulseSize: 0,
         pulseDirection: 1,
-      })
+      });
     }
 
     // Animation function
     function animate() {
       // Create a gradient background
-      const gradient = ctx.createLinearGradient(0, 0, width, height)
-      gradient.addColorStop(0, "#0f172a")
-      gradient.addColorStop(0.5, "#1e1b4b")
-      gradient.addColorStop(1, "#4a1d96")
-      ctx.fillStyle = gradient
-      ctx.fillRect(0, 0, width, height)
+      const gradient = ctx.createLinearGradient(0, 0, width, height);
+      gradient.addColorStop(0, "#0f172a");
+      gradient.addColorStop(0.5, "#1e1b4b");
+      gradient.addColorStop(1, "#4a1d96");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, width, height);
 
       // Update and draw particles
       particles.forEach((particle) => {
         // Move particles
-        particle.x += particle.vx
-        particle.y += particle.vy
+        particle.x += particle.vx;
+        particle.y += particle.vy;
 
         // Bounce off edges
-        if (particle.x < 0 || particle.x > width) particle.vx *= -1
-        if (particle.y < 0 || particle.y > height) particle.vy *= -1
+        if (particle.x < 0 || particle.x > width) particle.vx *= -1;
+        if (particle.y < 0 || particle.y > height) particle.vy *= -1;
 
         // Pulse effect
-        particle.pulseSize += particle.pulseSpeed * particle.pulseDirection
+        particle.pulseSize += particle.pulseSpeed * particle.pulseDirection;
         if (particle.pulseSize > 1 || particle.pulseSize < 0) {
-          particle.pulseDirection *= -1
+          particle.pulseDirection *= -1;
         }
 
         // Draw particle
-        ctx.beginPath()
-        ctx.arc(particle.x, particle.y, particle.radius + particle.pulseSize, 0, Math.PI * 2)
-        ctx.fillStyle = particle.color
-        ctx.fill()
-      })
+        ctx.beginPath();
+        ctx.arc(
+          particle.x,
+          particle.y,
+          particle.radius + particle.pulseSize,
+          0,
+          Math.PI * 2
+        );
+        ctx.fillStyle = particle.color;
+        ctx.fill();
+      });
 
       // Find and draw connections
-      connections.length = 0
+      connections.length = 0;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x
-          const dy = particles[i].y - particles[j].y
-          const distance = Math.sqrt(dx * dx + dy * dy)
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < connectionDistance) {
             connections.push({
               p1: particles[i],
               p2: particles[j],
               opacity: 1 - distance / connectionDistance,
-            })
+            });
           }
         }
       }
 
       // Draw connections
       connections.forEach((connection) => {
-        ctx.beginPath()
-        ctx.moveTo(connection.p1.x, connection.p1.y)
-        ctx.lineTo(connection.p2.x, connection.p2.y)
+        ctx.beginPath();
+        ctx.moveTo(connection.p1.x, connection.p1.y);
+        ctx.lineTo(connection.p2.x, connection.p2.y);
 
         // Create gradient for connection
-        const gradient = ctx.createLinearGradient(connection.p1.x, connection.p1.y, connection.p2.x, connection.p2.y)
-        gradient.addColorStop(0, connection.p1.color.replace(")", `, ${connection.opacity})`).replace("rgb", "rgba"))
-        gradient.addColorStop(1, connection.p2.color.replace(")", `, ${connection.opacity})`).replace("rgb", "rgba"))
+        const gradient = ctx.createLinearGradient(
+          connection.p1.x,
+          connection.p1.y,
+          connection.p2.x,
+          connection.p2.y
+        );
+        gradient.addColorStop(
+          0,
+          connection.p1.color
+            .replace(")", `, ${connection.opacity})`)
+            .replace("rgb", "rgba")
+        );
+        gradient.addColorStop(
+          1,
+          connection.p2.color
+            .replace(")", `, ${connection.opacity})`)
+            .replace("rgb", "rgba")
+        );
 
-        ctx.strokeStyle = gradient
-        ctx.lineWidth = connection.opacity * 1.5
-        ctx.stroke()
-      })
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = connection.opacity * 1.5;
+        ctx.stroke();
+      });
 
       // Add subtle glow effect
-      const radialGradient = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, width / 2)
-      radialGradient.addColorStop(0, "rgba(139, 92, 246, 0.05)")
-      radialGradient.addColorStop(0.5, "rgba(124, 58, 237, 0.03)")
-      radialGradient.addColorStop(1, "rgba(109, 40, 217, 0)")
-      ctx.fillStyle = radialGradient
-      ctx.fillRect(0, 0, width, height)
+      const radialGradient = ctx.createRadialGradient(
+        width / 2,
+        height / 2,
+        0,
+        width / 2,
+        height / 2,
+        width / 2
+      );
+      radialGradient.addColorStop(0, "rgba(139, 92, 246, 0.05)");
+      radialGradient.addColorStop(0.5, "rgba(124, 58, 237, 0.03)");
+      radialGradient.addColorStop(1, "rgba(109, 40, 217, 0)");
+      ctx.fillStyle = radialGradient;
+      ctx.fillRect(0, 0, width, height);
 
-      requestAnimationFrame(animate)
+      requestAnimationFrame(animate);
     }
 
     // Start animation
-    animate()
+    animate();
 
     // Handle resize
     const handleResize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
 
-    window.addEventListener("resize", handleResize)
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize)
-    }
-  }, [])
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleGoToDocument = (document_id) => {
-    navigate(`/document/${document_id}`)
-  }
+    navigate(`/document/${document_id}`);
+  };
 
   const handleRefresh = () => {
-    dispatch(AsyncGetScans())
-  }
+    dispatch(AsyncGetScans());
+  };
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage)
-  }
+    setPage(newPage);
+  };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(Number.parseInt(event.target.value, 10))
-    setPage(0)
-  }
+    setRowsPerPage(Number.parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   useEffect(() => {
-    dispatch(AsyncGetScans())
-  }, [dispatch])
+    dispatch(AsyncGetScans());
+  }, [dispatch]);
 
   const handleDownload = async (url_file, path) => {
-    const file = `${url_file}${path}`
-    const fileName = file.split("/").pop()
-    const response = await fetch(file) // Replace with your file URL
-    const blob = await response.blob()
-    const url = window.URL.createObjectURL(blob)
+    const file = `${url_file}${path}`;
+    const fileName = file.split("/").pop();
+    const response = await fetch(file); // Replace with your file URL
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
 
-    const a = document.createElement("a")
-    a.href = url
-    a.download = fileName // Specify the file name
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-    window.URL.revokeObjectURL(url) // Clean up
-  }
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName; // Specify the file name
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url); // Clean up
+  };
 
-  const paginatedScans = scans.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  const paginatedScans = scans.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
 
   // FAQ items
   const faqItems = [
     {
       question: t("What types of scans are supported?"),
       answer: t(
-        "Our platform supports various medical imaging formats including X-rays, MRIs, CT scans, and ultrasounds. All images are stored securely and can be viewed in high resolution.",
+        "Our platform supports various medical imaging formats including X-rays, MRIs, CT scans, and ultrasounds. All images are stored securely and can be viewed in high resolution."
       ),
     },
     {
       question: t("How long are my scans stored?"),
       answer: t(
-        "Your scans are securely stored on our platform indefinitely. You can access them anytime from your account. Premium members get additional backup options and export features.",
+        "Your scans are securely stored on our platform indefinitely. You can access them anytime from your account. Premium members get additional backup options and export features."
       ),
     },
     {
       question: t("Can I share my scans with my doctor?"),
       answer: t(
-        "Yes, you can easily share your scans with healthcare professionals. Premium members have advanced sharing options including direct integration with healthcare systems.",
+        "Yes, you can easily share your scans with healthcare professionals. Premium members have advanced sharing options including direct integration with healthcare systems."
       ),
     },
     {
       question: t("How secure is my scan data?"),
       answer: t(
-        "We use industry-leading encryption and security protocols to protect your medical data. All scans are stored in compliance with healthcare privacy regulations.",
+        "We use industry-leading encryption and security protocols to protect your medical data. All scans are stored in compliance with healthcare privacy regulations."
       ),
     },
-  ]
+  ];
 
   // Premium benefits
   const premiumBenefits = [
     {
       icon: <SpeedIcon />,
       title: t("Immediate Access"),
-      description: t("Get your scan results immediately after they're uploaded, no waiting period."),
+      description: t(
+        "Get your scan results immediately after they're uploaded, no waiting period."
+      ),
       color: "#8b5cf6",
     },
     {
       icon: <VerifiedUserIcon />,
       title: t("Priority Analysis"),
-      description: t("Your scans are analyzed by our medical professionals with top priority."),
+      description: t(
+        "Your scans are analyzed by our medical professionals with top priority."
+      ),
       color: "#ec4899",
     },
     {
       icon: <AccessTimeIcon />,
       title: t("24/7 Support"),
-      description: t("Access to round-the-clock support for any questions about your scans."),
+      description: t(
+        "Access to round-the-clock support for any questions about your scans."
+      ),
       color: "#8b5cf6",
     },
     {
       icon: <MedicalServicesIcon />,
       title: t("Expert Consultation"),
-      description: t("Direct consultation with specialists about your scan results."),
+      description: t(
+        "Direct consultation with specialists about your scan results."
+      ),
       color: "#ec4899",
     },
-  ]
+  ];
 
   return (
     <Box
@@ -319,7 +369,8 @@ export default function Scan() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: "radial-gradient(circle at center, rgba(91, 33, 182, 0.2) 0%, rgba(49, 10, 101, 0.6) 100%)",
+          background:
+            "radial-gradient(circle at center, rgba(91, 33, 182, 0.2) 0%, rgba(49, 10, 101, 0.6) 100%)",
           zIndex: 1,
         }}
       />
@@ -334,6 +385,9 @@ export default function Scan() {
           width: "100%",
         }}
       >
+        {isPatientPremium && role === "Patient" && (
+          <ScanUpload onUploadSuccess={handleRefresh} />
+        )}
         {/* Page Title */}
         <Box
           sx={{
@@ -423,11 +477,21 @@ export default function Scan() {
                   <StarIcon sx={{ fontSize: 30 }} />
                 </Avatar>
                 <Box>
-                  <Typography variant="h4" fontWeight="bold" color="white" gutterBottom>
+                  <Typography
+                    variant="h4"
+                    fontWeight="bold"
+                    color="white"
+                    gutterBottom
+                  >
                     {t("Premium Feature")}
                   </Typography>
-                  <Typography variant="subtitle1" color="rgba(255, 255, 255, 0.7)">
-                    {t("Upgrade to premium for immediate access to your scan results")}
+                  <Typography
+                    variant="subtitle1"
+                    color="rgba(255, 255, 255, 0.7)"
+                  >
+                    {t(
+                      "Upgrade to premium for immediate access to your scan results"
+                    )}
                   </Typography>
                 </Box>
               </Box>
@@ -461,10 +525,18 @@ export default function Scan() {
                         {benefit.icon}
                       </Avatar>
                       <Box>
-                        <Typography variant="h6" fontWeight="medium" color="white" gutterBottom>
+                        <Typography
+                          variant="h6"
+                          fontWeight="medium"
+                          color="white"
+                          gutterBottom
+                        >
                           {benefit.title}
                         </Typography>
-                        <Typography variant="body2" color="rgba(255, 255, 255, 0.7)">
+                        <Typography
+                          variant="body2"
+                          color="rgba(255, 255, 255, 0.7)"
+                        >
                           {benefit.description}
                         </Typography>
                       </Box>
@@ -477,16 +549,21 @@ export default function Scan() {
                 sx={{
                   p: 3,
                   borderRadius: "12px",
-                  background: "linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%)",
+                  background:
+                    "linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%)",
                   border: "1px solid rgba(236, 72, 153, 0.2)",
                   mb: 3,
                   display: "flex",
                   alignItems: "center",
                 }}
               >
-                <PriorityHighIcon sx={{ color: "#ec4899", mr: 2, fontSize: 24 }} />
+                <PriorityHighIcon
+                  sx={{ color: "#ec4899", mr: 2, fontSize: 24 }}
+                />
                 <Typography color="rgba(255, 255, 255, 0.9)">
-                  {t("The average patient gets the scan within 24/48 hours. Premium patients get it immediately.")}
+                  {t(
+                    "The average patient gets the scan within 24/48 hours. Premium patients get it immediately."
+                  )}
                 </Typography>
               </Box>
 
@@ -495,7 +572,7 @@ export default function Scan() {
                   variant="contained"
                   startIcon={<StarIcon />}
                   onClick={() => {
-                    navigate("/subscription")
+                    navigate("/subscription");
                   }}
                   sx={{
                     background: "linear-gradient(45deg, #8b5cf6, #ec4899)",
@@ -547,7 +624,14 @@ export default function Scan() {
           }}
         >
           <CardContent sx={{ p: 3 }}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                mb: 3,
+              }}
+            >
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Typography variant="h5" fontWeight="bold" color="white">
                   {t("Your Scans")}
@@ -573,17 +657,38 @@ export default function Scan() {
                   textAlign: "center",
                   background: alpha(theme.palette.common.white, 0.02),
                   borderRadius: "8px",
-                  border: `1px dashed ${alpha(theme.palette.primary.main, 0.2)}`,
+                  border: `1px dashed ${alpha(
+                    theme.palette.primary.main,
+                    0.2
+                  )}`,
                 }}
               >
-                <ImageIcon sx={{ fontSize: 64, color: "rgba(255, 255, 255, 0.2)", mb: 2 }} />
-                <Typography color="rgba(255, 255, 255, 0.7)" variant="h6" gutterBottom>
+                <ImageIcon
+                  sx={{
+                    fontSize: 64,
+                    color: "rgba(255, 255, 255, 0.2)",
+                    mb: 2,
+                  }}
+                />
+                <Typography
+                  color="rgba(255, 255, 255, 0.7)"
+                  variant="h6"
+                  gutterBottom
+                >
                   {t("No scans found.")}
                 </Typography>
-                <Typography color="rgba(255, 255, 255, 0.5)" variant="body2" sx={{ maxWidth: 500, mx: "auto", mb: 3 }}>
+                <Typography
+                  color="rgba(255, 255, 255, 0.5)"
+                  variant="body2"
+                  sx={{ maxWidth: 500, mx: "auto", mb: 3 }}
+                >
                   {role === "Admin"
-                    ? t("Upload your first medical scan to get started. Our system will securely store and analyze it.")
-                    : t("No scans have been uploaded for you yet. Please contact your administrator.")}
+                    ? t(
+                        "Upload your first medical scan to get started. Our system will securely store and analyze it."
+                      )
+                    : t(
+                        "No scans have been uploaded for you yet. Please contact your administrator."
+                      )}
                 </Typography>
                 {role === "Admin" && (
                   <Button
@@ -608,7 +713,10 @@ export default function Scan() {
                   sx={{
                     borderRadius: "8px",
                     background: alpha(theme.palette.common.white, 0.02),
-                    border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                    border: `1px solid ${alpha(
+                      theme.palette.primary.main,
+                      0.1
+                    )}`,
                     mb: 2,
                     "&::-webkit-scrollbar": {
                       width: "8px",
@@ -630,7 +738,10 @@ export default function Scan() {
                           sx={{
                             color: "rgba(255, 255, 255, 0.7)",
                             fontWeight: "bold",
-                            borderBottom: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                            borderBottom: `1px solid ${alpha(
+                              theme.palette.primary.main,
+                              0.1
+                            )}`,
                             fontSize: "0.9rem",
                           }}
                         >
@@ -640,7 +751,10 @@ export default function Scan() {
                           sx={{
                             color: "rgba(255, 255, 255, 0.7)",
                             fontWeight: "bold",
-                            borderBottom: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                            borderBottom: `1px solid ${alpha(
+                              theme.palette.primary.main,
+                              0.1
+                            )}`,
                             fontSize: "0.9rem",
                           }}
                         >
@@ -651,7 +765,10 @@ export default function Scan() {
                           sx={{
                             color: "rgba(255, 255, 255, 0.7)",
                             fontWeight: "bold",
-                            borderBottom: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                            borderBottom: `1px solid ${alpha(
+                              theme.palette.primary.main,
+                              0.1
+                            )}`,
                             fontSize: "0.9rem",
                           }}
                         >
@@ -661,7 +778,9 @@ export default function Scan() {
                     </TableHead>
                     <TableBody>
                       {paginatedScans.map((scan) => {
-                        const formattedDate = dayjs(scan.createdAt).format("DD-MM-YY HH:mm")
+                        const formattedDate = dayjs(scan.createdAt).format(
+                          "DD-MM-YY HH:mm"
+                        );
                         return (
                           <TableRow
                             key={scan._id}
@@ -669,17 +788,25 @@ export default function Scan() {
                             sx={{
                               transition: "background-color 0.3s ease",
                               "&:hover": {
-                                backgroundColor: alpha(theme.palette.primary.main, 0.05),
+                                backgroundColor: alpha(
+                                  theme.palette.primary.main,
+                                  0.05
+                                ),
                               },
                               "& td": {
-                                borderBottom: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                                borderBottom: `1px solid ${alpha(
+                                  theme.palette.primary.main,
+                                  0.1
+                                )}`,
                                 color: "white",
                                 py: 2,
                               },
                             }}
                           >
                             <TableCell>
-                              <Box sx={{ display: "flex", alignItems: "center" }}>
+                              <Box
+                                sx={{ display: "flex", alignItems: "center" }}
+                              >
                                 <Avatar
                                   sx={{
                                     bgcolor: "rgba(139, 92, 246, 0.1)",
@@ -690,23 +817,40 @@ export default function Scan() {
                                   <PersonIcon />
                                 </Avatar>
                                 <Box>
-                                  <Typography variant="body2" fontWeight="medium">
+                                  <Typography
+                                    variant="body2"
+                                    fontWeight="medium"
+                                  >
                                     {name}
                                   </Typography>
-                                  <Typography variant="caption" color="rgba(255, 255, 255, 0.5)">
+                                  <Typography
+                                    variant="caption"
+                                    color="rgba(255, 255, 255, 0.5)"
+                                  >
                                     {role}
                                   </Typography>
                                 </Box>
                               </Box>
                             </TableCell>
                             <TableCell>
-                              <Box sx={{ display: "flex", alignItems: "center" }}>
-                                <CalendarMonthIcon fontSize="small" sx={{ color: "#ec4899", mr: 1, opacity: 0.7 }} />
+                              <Box
+                                sx={{ display: "flex", alignItems: "center" }}
+                              >
+                                <CalendarMonthIcon
+                                  fontSize="small"
+                                  sx={{ color: "#ec4899", mr: 1, opacity: 0.7 }}
+                                />
                                 <Typography>{formattedDate}</Typography>
                               </Box>
                             </TableCell>
                             <TableCell align="right">
-                              <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "flex-end",
+                                  gap: 1,
+                                }}
+                              >
                                 <Tooltip title={t("View scan")}>
                                   <IconButton
                                     onClick={() => handleGoToDocument(scan._id)}
@@ -729,7 +873,7 @@ export default function Scan() {
                                 <Tooltip title={t("Download scan")}>
                                   <IconButton
                                     onClick={() => {
-                                      handleDownload(BASE_URL, scan.imageURL)
+                                      handleDownload(BASE_URL, scan.imageURL);
                                     }}
                                     size="small"
                                     sx={{
@@ -750,7 +894,7 @@ export default function Scan() {
                               </Box>
                             </TableCell>
                           </TableRow>
-                        )
+                        );
                       })}
                     </TableBody>
                   </Table>
@@ -766,10 +910,11 @@ export default function Scan() {
                   onRowsPerPageChange={handleChangeRowsPerPage}
                   sx={{
                     color: "rgba(255, 255, 255, 0.7)",
-                    ".MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows": {
-                      margin: 0,
-                      color: "rgba(255, 255, 255, 0.7)",
-                    },
+                    ".MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows":
+                      {
+                        margin: 0,
+                        color: "rgba(255, 255, 255, 0.7)",
+                      },
                     ".MuiTablePagination-select": {
                       color: "white",
                     },
@@ -844,7 +989,11 @@ export default function Scan() {
                 }}
               >
                 <AccordionSummary
-                  expandIcon={<ExpandMoreIcon sx={{ color: "rgba(255, 255, 255, 0.7)" }} />}
+                  expandIcon={
+                    <ExpandMoreIcon
+                      sx={{ color: "rgba(255, 255, 255, 0.7)" }}
+                    />
+                  }
                   sx={{
                     "& .MuiAccordionSummary-content": {
                       margin: "12px 0",
@@ -854,7 +1003,9 @@ export default function Scan() {
                   <Typography fontWeight="medium">{item.question}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography color="rgba(255, 255, 255, 0.7)">{item.answer}</Typography>
+                  <Typography color="rgba(255, 255, 255, 0.7)">
+                    {item.answer}
+                  </Typography>
                 </AccordionDetails>
               </Accordion>
             ))}
@@ -862,5 +1013,5 @@ export default function Scan() {
         </Card>
       </Box>
     </Box>
-  )
+  );
 }

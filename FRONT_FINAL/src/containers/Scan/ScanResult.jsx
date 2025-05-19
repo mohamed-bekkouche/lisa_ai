@@ -96,16 +96,16 @@ export default function ScanResult() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
+  const getScanResult = async () => {
+    try {
+      const response = await axios.get("/patient/scanResults");
+      setScanResults(response?.data?.scanResults);
+      console.log("scanResult : ", response.data.scanResults);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const getScanResult = async () => {
-      try {
-        const response = await axios.get("/patient/scanResults");
-        setScanResults(response?.data?.scanResults);
-        console.log("scanResult : ", response.data.scanResults);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getScanResult();
   }, []);
 
@@ -234,12 +234,12 @@ export default function ScanResult() {
   };
 
   const handleOpenScanDialog = () => {
-    setSelectedScan(null);
-    setUploadType("existing");
-    setUploadedFile(null);
-    setPreviewUrl("");
-    setSuccess(false);
-    setScanDialogOpen(true);
+    // setSelectedScan(null);
+    // setUploadType("existing");
+    // setUploadedFile(null);
+    // setPreviewUrl("");
+    // setSuccess(false);
+    // setScanDialogOpen(true);
   };
 
   const handleCloseScanDialog = () => {
@@ -281,11 +281,13 @@ export default function ScanResult() {
         .then(() => {
           setSuccess(true);
           setIsSubmitting(false);
+          setSelectedScan(null);
+          dispatch(AsyncGetScans());
+          getScanResult();
           // Close dialog after a short delay
           setTimeout(() => {
             handleCloseScanDialog();
-            dispatch(AsyncGetScans());
-          }, 2000);
+          }, 1500);
         })
         .catch((err) => {
           setIsSubmitting(false);
@@ -345,7 +347,15 @@ export default function ScanResult() {
     page * rowsPerPage + rowsPerPage
   );
 
-  const paginatedScans = scans.slice(
+  const paginatedScanIds = new Set(
+    paginatedScanResults.map((result) => result.scanID._id)
+  );
+
+  const scansNotInPaginatedResults = scans.filter(
+    (scan) => !paginatedScanIds.has(scan._id)
+  );
+
+  const paginatedScans = scansNotInPaginatedResults.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
@@ -547,7 +557,7 @@ export default function ScanResult() {
               >
                 {t("Refresh")}
               </Button>
-              <Button
+              {/* <Button
                 variant="contained"
                 startIcon={<AddIcon />}
                 onClick={handleOpenScanDialog}
@@ -567,7 +577,7 @@ export default function ScanResult() {
                 }}
               >
                 {t("New Analysis")}
-              </Button>
+              </Button> */}
             </Box>
           </Box>
         </Fade>
@@ -1392,11 +1402,81 @@ export default function ScanResult() {
                           </Grid>
                         ))}
                       </Grid>
+
+                      {/* {addd. it } */}
+                      {selectedScan && (
+                        <DialogActions sx={{ p: 2.5 }}>
+                          <Button
+                            variant="outlined"
+                            startIcon={<CloseIcon />}
+                            disabled={isSubmitting}
+                            onClick={() => {
+                              setSelectedScan(null);
+                              setUploadType("existing");
+                              setUploadedFile(null);
+                              setPreviewUrl("");
+                              setSuccess(false);
+                            }}
+                            sx={{
+                              borderRadius: "12px",
+                              borderColor: "rgba(255, 255, 255, 0.2)",
+                              color: "rgba(255, 255, 255, 0.8)",
+                              "&:hover": {
+                                borderColor: "rgba(255, 255, 255, 0.3)",
+                                backgroundColor: "rgba(255, 255, 255, 0.05)",
+                              },
+                              py: 1,
+                              px: 2,
+                            }}
+                          >
+                            {t("Cancel")}
+                          </Button>
+
+                          <Button
+                            variant="contained"
+                            startIcon={
+                              isSubmitting ? (
+                                <CircularProgress size={20} color="inherit" />
+                              ) : (
+                                <HealthAndSafetyIcon />
+                              )
+                            }
+                            onClick={handleSubmitScan}
+                            disabled={
+                              isSubmitting ||
+                              success ||
+                              (uploadType === "existing" && !selectedScan) ||
+                              (uploadType === "upload" && !uploadedFile)
+                            }
+                            sx={{
+                              borderRadius: "12px",
+                              backgroundColor: "#d946ef",
+                              color: "white",
+                              "&:hover": {
+                                backgroundColor: "#c026d3",
+                                transform: "translateY(-2px)",
+                                boxShadow: "0 6px 15px rgba(217, 70, 239, 0.3)",
+                              },
+                              "&:disabled": {
+                                backgroundColor: "rgba(217, 70, 239, 0.3)",
+                                color: "rgba(255, 255, 255, 0.5)",
+                              },
+                              transition: "all 0.2s ease",
+                              py: 1,
+                              px: 2,
+                            }}
+                          >
+                            {isSubmitting
+                              ? t("Submitting...")
+                              : t("Submit for Analysis")}
+                          </Button>
+                        </DialogActions>
+                      )}
                     </FormControl>
                   </Box>
 
                   {/* Upload New Scan Section for Premium Users */}
-                  {isPatientPremium && (
+                  {/* {isPatientPremium && (
                     <Box sx={{ mb: 4 }}>
                       <Divider
                         sx={{ borderColor: "rgba(255, 255, 255, 0.1)", my: 3 }}
@@ -1573,7 +1653,7 @@ export default function ScanResult() {
                         )}
                       </Box>
                     </Box>
-                  )}
+                  )} */}
 
                   {/* Analysis Results Table */}
                   <Box sx={{ mb: 3 }}>

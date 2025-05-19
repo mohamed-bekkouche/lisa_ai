@@ -60,11 +60,12 @@ export const activateDoctor = async (req, res) => {
     const io = req.app.get("io");
     await sendNotification(
       `Dr.${doctor.name} Your DEEPVISION LAB Account Has Been Approved`,
+      `Dr.${doctor.name}, votre compte DEEPVISION LAB a été approuvé`,
       doctor._id,
       io
     );
 
-    const fixedPath  = __dirname.substring(1)
+    const fixedPath = __dirname.substring(1);
 
     const template = fs.readFileSync(
       path.join(fixedPath, "../mails/acceptDoctor.ejs"),
@@ -104,11 +105,12 @@ export const rejectDoctor = async (req, res) => {
     const io = req.app.get("io");
     await sendNotification(
       `Dr.${doctor.name} Your DEEPVISION LAB Account Has Been Refuse`,
+      `Dr.${doctor.name}, votre compte DEEPVISION LAB a été refusé`,
       doctor._id,
       io
     );
 
-    const fixedPath  = __dirname.substring(1)
+    const fixedPath = __dirname.substring(1);
 
     const template = fs.readFileSync(
       path.join(fixedPath, "../mails/refuseDoctor.ejs"),
@@ -199,6 +201,7 @@ export const approveAppointment = async (req, res) => {
     const io = req.app.get("io");
     await sendNotification(
       `Patient ${patient.name} Your Appointment on ${appointmentDate} at ${appointmentTime}. Has Been Approve`,
+      `Patient ${patient.name}, votre rendez-vous le ${appointmentDate} à ${appointmentTime} a été approuvé`,
       patient._id,
       io
     );
@@ -266,6 +269,7 @@ export const refuseAppointment = async (req, res) => {
     const io = req.app.get("io");
     await sendNotification(
       `Patient ${patient.name} Your Appointment on ${appointmentDate} at ${appointmentTime}. Has Been Refuse`,
+      `Patient ${patient.name}, votre rendez-vous le ${appointmentDate} à ${appointmentTime} a été refusé`,
       patient._id,
       io
     );
@@ -335,6 +339,7 @@ export const rescheduleAppointment = async (req, res) => {
     const io = req.app.get("io");
     await sendNotification(
       `Patient ${patient.name} Your Appointment Has Been Reschedule to ${appointmentDate} at ${appointmentTime}`,
+      `Patient ${patient.name}, votre rendez-vous a été reprogrammé au ${appointmentDate} à ${appointmentTime}`,
       patient._id,
       io
     );
@@ -499,6 +504,27 @@ export const removeUnavailableDay = async (req, res) => {
   }
 };
 
+// Get Scans
+export const getScans = async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    const scans = await Scan.find()
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .populate("patientID", "name email avatar");
+    const scansNumber = await Scan.countDocuments();
+    res.status(200).json({
+      success: true,
+      scans,
+      NbOfPages: Math.ceil(scansNumber / limit),
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching scans", error });
+  }
+};
+
 // Upload Scan
 export const uploadScan = async (req, res) => {
   try {
@@ -521,6 +547,7 @@ export const uploadScan = async (req, res) => {
     const io = req.app.get("io");
     await sendNotification(
       `Patient ${patient.name} Your Scan Is Uploaded`,
+      `Patient ${patient.name}, votre scan a été téléchargé`,
       patient._id,
       io
     );

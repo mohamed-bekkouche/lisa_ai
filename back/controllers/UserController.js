@@ -55,6 +55,7 @@ export const signUp = async (req, res) => {
       "activateAccount.ejs"
     );
     console.log("templatePath : ", __dirname);
+
     if (fs.existsSync(templatePath)) {
       const template = fs.readFileSync(templatePath, "utf8");
 
@@ -195,13 +196,11 @@ export const logIn = async (req, res) => {
     const userWithoutPassword = user.toObject();
     delete userWithoutPassword.password;
 
-    res
-      .status(200)
-      .json({
-        message: "Login successful",
-        user: userWithoutPassword,
-        token: jwtToken,
-      });
+    res.status(200).json({
+      message: "Login successful",
+      user: userWithoutPassword,
+      token: jwtToken,
+    });
   } catch (error) {
     res.status(error.status || 500).json({ err: error.message });
   }
